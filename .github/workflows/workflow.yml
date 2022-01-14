@@ -1,0 +1,16 @@
+name: infinity_alive
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          baseHref: /infinity_alive/
+          webRenderer: canvaskit
