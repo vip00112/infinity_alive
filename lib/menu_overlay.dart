@@ -49,7 +49,16 @@ class _MenuOverlayState extends State<MenuOverlay> {
             (Global.isPause() || Global.isOver())
                 ? Column(
                     children: [
-                      const SizedBox(height: 5),
+                      Global.isPause()
+                          ? Text(
+                              pauseText,
+                              style: const TextStyle(color: Colors.white, fontSize: 80),
+                            )
+                          : Text(
+                              overText,
+                              style: const TextStyle(color: Colors.red, fontSize: 80),
+                            ),
+                      const SizedBox(height: 200),
                       Text(
                         "LEVEL : ${Global.level}",
                         style: const TextStyle(color: Colors.white, fontSize: 15),
@@ -64,33 +73,22 @@ class _MenuOverlayState extends State<MenuOverlay> {
                         "MISSILE : ${widget.game.missiles.length}",
                         style: const TextStyle(color: Colors.white, fontSize: 15),
                       ),
-                      Global.isPause()
-                          ? Text(
-                              pauseText,
-                              style: const TextStyle(color: Colors.white, fontSize: 80),
-                            )
-                          : Text(
-                              overText,
-                              style: const TextStyle(color: Colors.red, fontSize: 80),
-                            ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 62),
                       Text(
                         "SCORE : ${Global.score.toStringAsFixed(4)}",
                         style: const TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      const SizedBox(height: 5),
-                      Global.isPause()
-                          ? Text(
-                              "Press space bar or click to ${resumeText} button.",
-                              style: TextStyle(color: Colors.white, fontSize: 15),
-                            )
-                          : Text(
-                              "Press space bar or click to ${startText} button.",
-                              style: TextStyle(color: Colors.white, fontSize: 15),
-                            ),
                     ],
                   )
-                : const SizedBox.shrink(),
+                : Column(
+                    children: [
+                      const SizedBox(height: 500),
+                      Text(
+                        "SCORE : ${Global.score.toStringAsFixed(4)}",
+                        style: const TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  ),
           ],
         ),
       ],
