@@ -1,8 +1,8 @@
-name: Gh-Pages
+name: infinity_alive
 
 on:
   push:
-    branches: develop
+    branches: master
 
 jobs:
   build:
@@ -11,7 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
-      - uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /infinity_alive/
           webRenderer: canvaskit
