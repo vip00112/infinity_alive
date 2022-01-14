@@ -1,14 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:infinity_alive/global.dart';
 import 'package:infinity_alive/menu_overlay.dart';
 import 'package:infinity_alive/missile.dart';
 import 'package:infinity_alive/spaceship.dart';
 
-class GameManager extends FlameGame with KeyboardEvents, HasDraggables, HasCollidables {
+class GameManager extends FlameGame with HasDraggables, HasCollidables {
   late SpaceShip spaceShip;
   late MenuOverlay menu;
   final List<Missile> missiles = [];
@@ -24,25 +21,6 @@ class GameManager extends FlameGame with KeyboardEvents, HasDraggables, HasColli
     add(spaceShip);
 
     return super.onLoad();
-  }
-
-  @override
-  KeyEventResult onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    final isKeyDown = event is RawKeyDownEvent;
-
-    final isSpace = keysPressed.contains(LogicalKeyboardKey.space);
-    if (isSpace && isKeyDown) {
-      if (Global.isRun()) {
-        Global.status = GameStatus.pause;
-      } else if (Global.isPause()) {
-        Global.status = GameStatus.run;
-      } else {
-        restart();
-      }
-      menu.refreshScreen();
-      return KeyEventResult.handled;
-    }
-    return KeyEventResult.ignored;
   }
 
   @override
@@ -64,11 +42,12 @@ class GameManager extends FlameGame with KeyboardEvents, HasDraggables, HasColli
 
     Global.score += dt;
 
-    if (Global.score >= Global.level * 10 && Global.level <= 10) {
+    if (Global.score >= Global.level * 10 && Global.level <= 20) {
       Global.level++;
       Global.gameSpeed += 10;
-      createCount += 2;
+      createCount += 5;
     }
+    menu.refreshScreen();
   }
 
   void restart() {
@@ -78,6 +57,9 @@ class GameManager extends FlameGame with KeyboardEvents, HasDraggables, HasColli
     missiles.clear();
     createCount = 50;
     spaceShip.restart();
+    Global.level = 1;
+    Global.gameSpeed = 100;
+    Global.score = 0;
     Global.status = GameStatus.run;
   }
 }
