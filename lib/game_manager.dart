@@ -1,11 +1,11 @@
-import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:infinity_alive/global.dart';
 import 'package:infinity_alive/menu_overlay.dart';
 import 'package:infinity_alive/missile.dart';
 import 'package:infinity_alive/spaceship.dart';
 
-class GameManager extends FlameGame with HasDraggables, HasCollidables {
+class GameManager extends FlameGame with HasCollidables, MouseMovementDetector {
   late SpaceShip spaceShip;
   late MenuOverlay menu;
   final List<Missile> missiles = [];
@@ -48,6 +48,13 @@ class GameManager extends FlameGame with HasDraggables, HasCollidables {
       createCount += 5;
     }
     menu.refreshScreen();
+  }
+
+  @override
+  void onMouseMove(PointerHoverInfo info) {
+    if (Global.isPause() || Global.isOver()) return;
+
+    spaceShip.move(info.eventPosition.game);
   }
 
   void restart() {
